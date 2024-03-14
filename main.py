@@ -7,9 +7,9 @@ import os
 
 
 response=requests.get(url="https://www.billboard.com/charts/hot-100/")
-data=response.text
+webpage=response.text
 
-soup=BeautifulSoup(data,"html.parser")
+soup=BeautifulSoup(webpage,"html.parser")
 
 songs=soup.select("ul li h3")
 song_title=[song.getText().strip() for song in songs[0:20]]
