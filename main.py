@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import csv
+import os
 
 
 response=requests.get(url="https://www.billboard.com/charts/hot-100/")
@@ -17,8 +18,8 @@ artists=soup.find_all("span", class_="a-truncate-ellipsis-2line")
 song_artists=[artist.getText().strip() for artist in artists[0:20]]
 
 
-spotify=spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="9d5aea6402534b879f34509aebd39b47",client_secret="4d566e9bb32b4246a128ff70607a34b0",redirect_uri="http://example.com",
-                                          scope="playlist-modify-private",cache_path="tokens.txt",username="beejay"))
+spotify=spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=os.environ.get("SPOTIFY_ID"),client_secret=os.environ.get("SPOTIFY_SECRET"),redirect_uri="http://example.com",
+                                          scope="playlist-modify-private",cache_path="tokens.txt",username=os.environ.get("SPOTIFY_USERNAME")))
 
 song_IDs=[]
 for i in range(20):
@@ -42,3 +43,5 @@ with open("Billboard Top 20.csv",'w') as file:
     writer=csv.writer(file)
     writer.writerow(field_names)
     writer.writerows(rows)
+
+print("Please check the csv file for the latest weekly chart.")
