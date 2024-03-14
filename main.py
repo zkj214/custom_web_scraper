@@ -37,7 +37,7 @@ playlist_id="6sWnC4NkEIk6ErXanub7dg"
 spotify.playlist_replace_items(playlist_id,items=song_IDs)
 
 field_names=["Position","Song","Artist"]
-rows=[[i+1,song_title[i],song_artists[i]] for i in range(20)]
+rows=[[f"{i+1}",song_title[i],song_artists[i]] for i in range(20)]
 
 with open("Billboard Top 20.csv",'w') as file:
     writer=csv.writer(file)
